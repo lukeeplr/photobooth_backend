@@ -22,7 +22,7 @@ export default function LeftBar() {
             || pathname === link.route)
           )
           return (
-          <Link href={link.route} key={index} className={`leftsidebar_link ${isActive && 'bg-primary-500'}`}>
+          <Link href={link.route} key={index} className={`leftsidebar_link hover:bg-primary-500/20 transition-all ${isActive && 'bg-primary-500 hover:bg-primary-500'} `}>
             <Image src={link.imgURL} alt={link.label} width={24} height={24}/>
             <p className='text-light-1 max-lg:hidden'>{link.label}</p>
           </Link>
@@ -31,13 +31,13 @@ export default function LeftBar() {
 
       <div className='mt-10 px-6'>
         <SignedIn>
-            <SignOutButton>
-              <div className="flex cursor-pointer">
+            <SignOutButton signOutCallback={() => router.push('/sign-in')}>
+              <div className="flex cursor-pointer gap-4 px-4">
                 <Image src='/assets/logout.svg' alt='logout button' width={24} height={24} />
+                <p className="text-light-2 max-lg:hidden">Sair</p>
               </div>
             </SignOutButton>
           </SignedIn>
-          <p className="text-light-2 max-lg:hidden">Sair</p>
       </div>
 
     </section>
