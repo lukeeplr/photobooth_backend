@@ -7,5 +7,5 @@ export const UserValidation = z.object({
 
     username: z.string().min(5, {message: 'Seu nome de usuário precisa ter pelo menos 5 caracteres'}).max(24, {message: 'Seu nome de usuário deve ter no máximo 24 caracteres'}),
 
-    bio: z.string().min(1, {message: 'Sua bio deve ter pelos 1 caractere'}).max(1000, {message: 'Sua bio deve ter no máximo 1000 caracteres'})
+    bio: z.string().max(200, {message: 'Sua bio deve ter no máximo 200 caracteres'})
 })
