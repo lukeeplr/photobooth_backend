@@ -22,7 +22,7 @@ export default function LeftBar() {
             || pathname === link.route)
           )
           return (
-          <Link href={link.route} key={index} className={`leftsidebar_link hover:bg-primary-500/20 transition-all ${isActive && 'bg-primary-500 hover:bg-primary-500'} `}>
+          <Link href={link.route} key={index} className={`leftsidebar_link transition-all duration-500 ${isActive ?'bg-primary-500' : 'hover:bg-primary-500/20'} `}>
             <Image src={link.imgURL} alt={link.label} width={24} height={24}/>
             <p className='text-light-1 max-lg:hidden'>{link.label}</p>
           </Link>
