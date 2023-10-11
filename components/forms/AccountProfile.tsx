@@ -2,6 +2,7 @@
 
 import React, { ChangeEvent, useState } from 'react'
 import Image from 'next/image'
+import { usePathname, useRouter } from 'next/navigation'
 
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -21,6 +22,7 @@ import {
   import { Button } from "@/components/ui/button"
   import { Textarea } from '@/components/ui/textarea'
 import { isBase64Image } from '@/lib/utils'
+import { updateUser } from '@/lib/actions/user.actions'
    
 
 type AccountProfileProps = {
@@ -39,6 +41,8 @@ export default function AccountProfile( {user, btnTitle}: AccountProfileProps ) 
 
   const [files, setFiles] = useState<File[]>([])
   const { startUpload } = useUploadThing("media")
+  const pathname = usePathname()
+  const router = useRouter()
 
     const form = useForm({
         resolver: zodResolver(UserValidation),
@@ -84,7 +88,21 @@ export default function AccountProfile( {user, btnTitle}: AccountProfileProps ) 
           }
         }
 
-        // TODO: Update user profile
+        await updateUser({
+          userId: user.id,
+          username: values.username,
+          name: values.name,
+          bio: values.bio,
+          image: values.profile_photo,
+          path: pathname
+        })
+
+        if (pathname === '/profile/edit') {
+          router.back()
+        } else {
+          router.push('/')
+        }
+
       }
 
 
