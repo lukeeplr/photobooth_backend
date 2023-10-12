@@ -45,3 +45,14 @@ export async function updateUser({
         throw Error(`Falha ao criar/atualizar o usuário: ${error.message}`)
     }
 }
+
+
+export async function fetchUser(userId: string) {
+    connectToDB()
+
+    try {
+       return await User.findOne({id: userId})
+    } catch (error: any) {
+        throw Error(`Falha ao encontrar o usuário: ${error.message}`)
+    }
+}
