@@ -29,7 +29,7 @@ type ThreadCardProps = {
 export default function ThreadCard({ id, currentUser, parentId, content, author, community, createdAt, comments }: ThreadCardProps) {
   return (
     <article className='flex flex-col w-full rounded-xl bg-dark-2 p-7'>
-        <div>    
+
         <Link 
         href={`/profile/${id}`}
         className='relative h-11 w-11'>
@@ -40,7 +40,6 @@ export default function ThreadCard({ id, currentUser, parentId, content, author,
             className='cursor-pointer rounded-full'
             />
         </Link>
-        </div>
         <h2 className="text-small-regular text-light-2">
             {content}
         </h2>
