@@ -33,7 +33,7 @@ export default function LeftBar() {
         <SignedIn>
             <SignOutButton signOutCallback={() => router.push('/sign-in')}>
               <div className="flex cursor-pointer gap-4 px-4">
-                <Image src='/assets/logout.svg' alt='logout button' width={24} height={24} />
+                <Image src='/assets/logout.svg' alt='botão de logout' width={24} height={24} />
                 <p className="text-light-2 max-lg:hidden">Sair</p>
               </div>
             </SignOutButton>

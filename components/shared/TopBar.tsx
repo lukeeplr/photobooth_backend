@@ -17,7 +17,7 @@ export default function TopBar() {
           <SignedIn>
             <SignOutButton>
               <div className="flex cursor-pointer">
-                <Image src='/assets/logout.svg' alt='logout button' width={24} height={24} />
+                <Image src='/assets/logout.svg' alt='botão de logout' width={24} height={24} />
               </div>
             </SignOutButton>
           </SignedIn>
