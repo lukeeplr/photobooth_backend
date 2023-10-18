@@ -1,7 +1,7 @@
 'use client'
 import Image from 'next/image'
 import React from 'react'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
@@ -10,7 +10,6 @@ import {
     FormControl,
     FormField,
     FormItem,
-    FormMessage,
     FormLabel
 } from "@/components/ui/form"
 import { Button } from "@/components/ui/button"
@@ -28,7 +27,7 @@ type CommmentProps = {
 export default function Comment({threadId, currentUserId, currentUserImage}: CommmentProps) {
 
     const pathname = usePathname()
-    const router = useRouter()
+
 
     const form = useForm({
         resolver: zodResolver(CommentValidation),
