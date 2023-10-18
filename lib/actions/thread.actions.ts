@@ -12,6 +12,13 @@ type createThreadParams = {
     path: string
 }
 
+type addCommentParams = {
+    threadId: string,
+    thread: string,
+    userId: string,
+    path: string
+}
+
 export async function createThread({author, thread, community, path}: createThreadParams) {
     connectToDB()
 
@@ -100,4 +107,34 @@ export async function fetchThreadById(id: string) {
         throw Error(`Falha ao buscar a thread: ${error.message}`)
     }
     
+}
+
+
+export async function addComment({threadId, thread, userId, path}: addCommentParams) {
+
+    try {
+        connectToDB()
+        const originalThread = await Thread.findById(threadId)
+
+        if (!originalThread) {
+            throw new Error('Thread não encontrada')
+        }
+
+        const reply = new Thread({
+            thread,
+            author: userId,
+            parentId: threadId
+        })
+
+        const savedReply = await reply.save()
+        originalThread.children.push(savedReply._id)
+
+        await originalThread.save()
+
+        revalidatePath(path)
+
+    } catch (error: any) {
+        throw Error(`Falha ao adicionar o comentário: ${error.message}`)
+    }
+
 }
