@@ -38,8 +38,25 @@ export default async function Page({params}: { params: {id: string}}) {
         <Comment 
         threadId={thread.id}
         currentUserId={JSON.stringify(userInfo._id)}
-        currentUserImage={user.imageUrl}
+        currentUserImage={userInfo.image}
         />
+      </div>
+
+      <div className='mt-10'>
+        {thread.children.map((reply: any) => (
+          <ThreadCard 
+          key={reply._id}
+          id={reply._id}
+          currentUser={user?.id || ''}
+          parentId={reply.parentId}
+          content={reply.thread}
+          author={reply.author}
+          community={reply.community}
+          createdAt={reply.createdAt}
+          comments={reply.children}
+          isComment
+          />
+        ))}
       </div>
 
 
