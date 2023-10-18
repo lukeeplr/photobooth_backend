@@ -45,7 +45,7 @@ export async function fetchThreads(pageNumber = 1, pageSize = 20) {
             populate: {
                 path: 'author',
                 model: User,
-                select: '_id name parentId image'
+                select: '_id name parentId username image'
             }
             
         })
@@ -60,4 +60,44 @@ export async function fetchThreads(pageNumber = 1, pageSize = 20) {
     } catch (error: any) {
         throw Error(`Falha ao buscar as threads: ${error.message}`)
     }
+}
+
+
+export async function fetchThreadById(id: string) {
+    
+    try {
+        connectToDB() 
+        const thread = await Thread.findById(id)
+        //TODO: populate community
+        .populate({
+            path: 'author',
+            model: User,
+            select: '_id id name username image'
+        })
+        .populate({
+            path: 'children',
+            populate: [
+                {
+                    path: 'author',
+                    model: User,
+                    select: '_id id name username image parentId'
+                },
+                {
+                    path: 'children',
+                    model: Thread,
+                    populate: {
+                        path: 'author',	
+                        model: User,
+                        select: '_id id name username parentId image'
+                    }
+                }
+            ]
+        }).exec()
+
+    return thread
+
+    } catch (error: any) {
+        throw Error(`Falha ao buscar a thread: ${error.message}`)
+    }
+    
 }
