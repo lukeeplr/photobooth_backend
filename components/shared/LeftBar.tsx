@@ -29,10 +29,10 @@ export default function LeftBar() {
         )})}
       </div>
 
-      <div className='mt-10 px-6'>
+      <div className='mt-10 px-6 '>
         <SignedIn>
             <SignOutButton signOutCallback={() => router.push('/sign-in')}>
-              <div className="flex cursor-pointer gap-4 px-4">
+              <div className="flex cursor-pointer gap-4 p-4 hover:bg-primary-500/20 rounded-lg">
                 <Image src='/assets/logout.svg' alt='botão de logout' width={24} height={24} />
                 <p className="text-light-2 max-lg:hidden">Sair</p>
               </div>
