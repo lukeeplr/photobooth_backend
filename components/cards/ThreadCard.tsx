@@ -63,7 +63,7 @@ export default function ThreadCard({ id, currentUser, parentId, content, author,
                   alt='botão de curtir'
                   width={24}
                   height={24}
-                  className='cursor-pointer object-contain'
+                  className='cursor-pointer object-contain hover:scale-125 active:scale-105 transition-all'
                 />
                 <Link href={`/thread/${id}`}>
                   <Image
@@ -71,7 +71,7 @@ export default function ThreadCard({ id, currentUser, parentId, content, author,
                     alt='botão de responder'
                     width={24}
                     height={24}
-                    className='cursor-pointer object-contain'
+                    className='cursor-pointer object-contain hover:scale-125 active:scale-105 transition-all'
                   />
                 </Link>
                 <Image
@@ -79,14 +79,14 @@ export default function ThreadCard({ id, currentUser, parentId, content, author,
                   alt='botão de repostar'
                   width={24}
                   height={24}
-                  className='cursor-pointer object-contain'
+                  className='cursor-pointer object-contain hover:scale-125 active:scale-105 transition-all'
                 />
                 <Image
                   src='/assets/share.svg'
                   alt='botão de compartilhar'
                   width={24}
                   height={24}
-                  className='cursor-pointer object-contain'
+                  className='cursor-pointer object-contain hover:scale-125 active:scale-105 transition-all'
                   />
                 </div>
 
