@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache"
 import User from "../models/user.model"
 import { connectToDB } from "../mongoose"
+import Thread from "../models/thread.model"
 
 type updateUserParams = {
     userId: string,
@@ -22,9 +23,10 @@ export async function updateUser({
     path
 }: updateUserParams
     ): Promise<void> {
-    connectToDB()
-
-    try {
+        
+        try {
+            
+        connectToDB()
         await User.findOneAndUpdate(
             {id: userId}, 
             {
@@ -48,11 +50,41 @@ export async function updateUser({
 
 
 export async function fetchUser(userId: string) {
-    connectToDB()
-
+    
     try {
+
+        connectToDB()
        return await User.findOne({id: userId})
+
     } catch (error: any) {
         throw Error(`Falha ao encontrar o usuário: ${error.message}`)
+    }
+}
+
+
+export async function fetchUserPosts(userId: string) {
+    try {
+
+        connectToDB()
+
+        const posts = await User.findById(userId)
+        .populate({
+            path: 'threads',
+            model: Thread,
+            populate: {
+                path: 'children',
+                model: Thread,
+                populate: {
+                    path: 'author',
+                    model: User,
+                    select: 'name image id'
+                }
+            } 
+        })
+
+        return posts
+
+    } catch (error: any) {
+        throw Error(`Falha ao encontrar os posts do usuário: ${error.message}`)
     }
 }
