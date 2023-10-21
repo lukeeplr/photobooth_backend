@@ -67,7 +67,7 @@ export async function fetchUserPosts(userId: string) {
 
         connectToDB()
 
-        const posts = await User.findById(userId)
+        const posts = await User.findOne({id: userId})
         .populate({
             path: 'threads',
             model: Thread,
