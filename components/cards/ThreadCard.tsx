@@ -55,7 +55,7 @@ export default function ThreadCard({ id, currentUser, parentId, content, author,
 
             <p className='mt-2 text-small-regular text-light-2'>{content}</p>
 
-            <div className={'mt-5 flex flex-col gap-3'}>
+            <div className={`${isComment && 'mb-10'} mt-5 flex flex-col gap-3`}>
               <div className='flex gap-3.5'>
                 {/* TODO: like functionality */}
                 <Image
@@ -63,7 +63,7 @@ export default function ThreadCard({ id, currentUser, parentId, content, author,
                   alt='botão de curtir'
                   width={24}
                   height={24}
-                  className='cursor-pointer object-contain hover:scale-125 active:scale-105 transition-all'
+                  className='button-animation'
                 />
                 <Link href={`/thread/${id}`}>
                   <Image
@@ -71,7 +71,7 @@ export default function ThreadCard({ id, currentUser, parentId, content, author,
                     alt='botão de responder'
                     width={24}
                     height={24}
-                    className='cursor-pointer object-contain hover:scale-125 active:scale-105 transition-all'
+                    className='button-animation'
                   />
                 </Link>
                 <Image
@@ -79,14 +79,14 @@ export default function ThreadCard({ id, currentUser, parentId, content, author,
                   alt='botão de repostar'
                   width={24}
                   height={24}
-                  className='cursor-pointer object-contain hover:scale-125 active:scale-105 transition-all'
+                  className='button-animation'
                 />
                 <Image
                   src='/assets/share.svg'
                   alt='botão de compartilhar'
                   width={24}
                   height={24}
-                  className='cursor-pointer object-contain hover:scale-125 active:scale-105 transition-all'
+                  className='button-animation'
                   />
                 </div>
 
