@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import { useOrganization } from '@clerk/nextjs'
 import { usePathname, useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -22,6 +23,7 @@ export default function PostThread({ userId }: { userId: string }) {
 
   const pathname = usePathname()
   const router = useRouter()
+  const { organization } = useOrganization()
 
     const form = useForm({
         resolver: zodResolver(ThreadValidation),
@@ -35,7 +37,7 @@ export default function PostThread({ userId }: { userId: string }) {
         await createThread({
           author: userId,
           thread: values.thread,
-          community: null,
+          community: organization ? organization.id : null,
           path: pathname
         })
 
