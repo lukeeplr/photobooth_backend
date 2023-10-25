@@ -7,6 +7,15 @@ import Community from "../models/community.model"
 import User from "../models/user.model"
 import Thread from "../models/thread.model"
 
+type createCommunityProps = {
+    id: string,
+    name: string,
+    username: string,
+    image: string,
+    bio: string,
+    createdBy: string
+}
+
 export async function addMemberToCommunity(userId: string, communityId: string) {
     
     try {
@@ -68,10 +77,31 @@ export async function removeUserFromCommunity(userId: string, communityId: strin
 }
 
 
-export async function createCommunity() {
+export async function createCommunity({id, name, username, image, bio, createdBy}: createCommunityProps) {
     try {
 
         connectToDB()
+
+        const user = await User.findOne({ id: createdBy })
+        if (!user) {
+            throw new Error('Usuário não encontrado')
+        }
+
+        const newCommmunity = new Community({
+            id,
+            name,
+            username,
+            image,
+            bio,
+            createdBy: user._id
+        })
+
+        const createdCommunity = await newCommmunity.save()
+
+        user.communities.push(createdCommunity._id)
+        await user.save()
+
+        return createdCommunity
 
     } catch (error: any) {
         throw new Error(`Falha ao criar a comunidade: ${error.message}`)
