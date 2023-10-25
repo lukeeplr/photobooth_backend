@@ -7,15 +7,6 @@ import Community from "../models/community.model"
 import User from "../models/user.model"
 import Thread from "../models/thread.model"
 
-type createCommunityProps = {
-    id: string,
-    name: string,
-    username: string,
-    image: string,
-    bio: string,
-    createdBy: string
-}
-
 export async function addMemberToCommunity(userId: string, communityId: string) {
     
     try {
@@ -77,7 +68,14 @@ export async function removeUserFromCommunity(userId: string, communityId: strin
 }
 
 
-export async function createCommunity({id, name, username, image, bio, createdBy}: createCommunityProps) {
+export async function createCommunity(
+    id: string, 
+    name: string,
+    username: string,
+    image: string, 
+    bio: string, 
+    createdBy: string
+    ) {
     try {
 
         connectToDB()
@@ -120,10 +118,20 @@ export async function deleteCommunity() {
 }
 
 
-export async function updateCommunityInfo() {
+export async function updateCommunityInfo(id: string, name: string, username: string, image: string) {
     try {
 
         connectToDB()
+        const updatedCommunity = await Community.findOneAndUpdate(
+            { id },
+            { name, username, image }
+        )
+
+            if (!updatedCommunity) {
+                throw new Error('Comunidade não encontrada')
+            }
+
+        return updatedCommunity
 
     } catch (error: any) {
         throw new Error(`Falha ao atualizar a comunidade: ${error.message}`)
