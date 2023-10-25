@@ -168,3 +168,29 @@ export async function updateCommunityInfo(id: string, name: string, username: st
         throw new Error(`Falha ao atualizar a comunidade: ${error.message}`)
     }
 }
+
+
+export async function fetchCommunityInfo(id:string) {
+    
+    try {
+
+        connectToDB()
+
+        const communityDetails = await Community.findOne({ id: id })
+        .populate([
+            'createdBy',
+            {
+                path: 'members',
+                model: User,
+                select: '_id id name username image'
+            }
+        ])
+
+        return communityDetails
+
+    } catch (error: any) {
+        throw new Error(`Falha ao encontrar a comunidade: ${error.message}`)
+    }
+
+
+}
