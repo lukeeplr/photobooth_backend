@@ -194,3 +194,41 @@ export async function fetchCommunityInfo(id:string) {
 
 
 }
+
+
+export async function fetchCommunityPosts(id: string) {
+
+    try {
+
+        connectToDB()
+
+        const communityPosts = await Community.findById(id)
+        .populate({
+            path: 'threads',
+            model: Thread,
+            populate: [
+                {
+                    path: 'author',
+                    model: User,
+                    select: '_id id name username image'
+                },
+                {
+                    path: 'children',
+                    model: Thread,
+                    populate: {
+                        path: 'author',
+                        model: User,
+                        select: '_id image'
+                    }
+                }
+            ]
+        })
+    
+        return communityPosts
+
+    } catch (error: any) {
+        throw new Error(`Falha ao encontrar os posts da comunidade: ${error.message}`)
+    }
+
+}
+    
