@@ -48,19 +48,31 @@ export async function removeUserFromCommunity(userId: string, communityId: strin
 
         connectToDB()
 
-        const community = await Community.findOne({ id: communityId })
+        const community = await Community.findOne({ id: communityId }, { _id: 1 })
         if (!community) {
             throw new Error('Comunidade não encontrada')
         }
 
-        const user = await User.findOne({ id: userId })
+        const user = await User.findOne({ id: userId }, { _id: 1 })
         if (!user) {
             throw new Error('Usuário não encontrado')
         }
 
         if (!community.members.includes(user._id)) {
-            throw new Error('Usuário já pertence a comunidade')
+            throw new Error('Usuário não pertence à comunidade')
         }
+
+        await Community.updateOne(
+            { _id: community._id },
+            { $pull: { members: user._id } }
+        )
+
+        await User.updateOne(
+            { _id: user._id },
+            { $pull: { communities: community._id } }
+        )
+
+        return {sucess: true}
 
     } catch (error: any) {
         throw new Error(`Falha ao remover o membro da comunidade: ${error.message}`)
