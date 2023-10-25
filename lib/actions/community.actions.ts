@@ -107,10 +107,29 @@ export async function createCommunity(
 } 
 
 
-export async function deleteCommunity() {
+export async function deleteCommunity(communityId: string) {
     try {
 
         connectToDB()
+
+        const deletedCommunity = await Community.findOneAndDelete({ id: communityId })
+
+        if (!deletedCommunity) {
+            throw new Error('Comunidade não encontrada')
+        }
+
+        await Thread.deleteMany({ community: communityId })
+
+        const members = await User.find({ communities: communityId })
+
+        const updateUserPromises = members.map((users) => {
+            users.communities.pull(communityId)
+            return users.save()
+        })
+
+        await Promise.all(updateUserPromises)
+
+        return deletedCommunity
 
     } catch (error: any) {
         throw new Error(`Falha ao deletar a comunidade: ${error.message}`)
