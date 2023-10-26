@@ -25,7 +25,7 @@ export async function createThread({author, thread, community, path}: createThre
     const createdThread = await Thread.create({
         author,
         thread,
-        community: null
+        community
     })
 
     await User.findByIdAndUpdate(author, {
