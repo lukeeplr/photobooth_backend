@@ -102,25 +102,22 @@ export default function ThreadCard({ id, currentUser, parentId, content, author,
         </div>
         {/* TODO: Delete thread */}
         {/* TODO: Show comment logos */}
+    </div>
         {!isComment && community && (
           <Link href={`/communities/${community.id}`} className='mt-5 flex items-center'>
             <p className='text-subtle-medium text-gray-1'>
               {formatDateString(createdAt.toString())}
-              - Comunidade {community.name}
+              {" "}- Comunidade {community.name}
             </p>
-
             <Image 
               src={community.image}
               alt={community.name}
-              width={14}
-              height={14}
+              width={16}
+              height={16}
               className='ml-1 rounded-full object-cover'
               />
-
-            
           </Link>
         )}
-    </div>
 
             
 
