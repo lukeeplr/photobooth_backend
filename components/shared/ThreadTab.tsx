@@ -2,22 +2,30 @@ import { fetchUserPosts } from '@/lib/actions/user.actions'
 import { redirect } from 'next/navigation'
 import React from 'react'
 import ThreadCard from '../cards/ThreadCard'
+import { fetchCommunityPosts } from '@/lib/actions/community.actions'
 
 type ThreadTypeProps = {
     currentUserId: string
     accountId: string
-    accountType: string
+    accountType: 'User' | 'Community'
 }
 
 export default async function ThreadTab({currentUserId, accountId, accountType}: ThreadTypeProps) {
   
-  let result = await fetchUserPosts(accountId)
+  let result: any
+
+  if (accountType === 'User') {
+    result = await fetchUserPosts(accountId)
+  } else {
+    result = await fetchCommunityPosts(accountId)
+  }
 
   if(!result) redirect('/')
   
   return (
 
     <section className='mt-9 flex flex-col gap-10'>
+        {console.log(result.threads.length)}
         {result.threads.map((thread: any) => (
           <ThreadCard 
           key={thread._id}
