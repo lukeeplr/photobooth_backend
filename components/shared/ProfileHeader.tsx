@@ -7,10 +7,11 @@ type ProfileHeaderProps = {
     name: string,
     username: string,
     image: string,
-    bio: string
+    bio: string,
+    type?: 'User' | 'Community'
 }
 
-export default function ProfileHeader({profileId, loggedId, name, username, image, bio}: ProfileHeaderProps) {
+export default function ProfileHeader({profileId, loggedId, name, username, image, bio, type}: ProfileHeaderProps) {
   return (
     <section>
         <div className='flex items-center gap-3'>
