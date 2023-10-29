@@ -1,10 +1,11 @@
 import UserCard from "@/components/cards/UserCard"
+import SearchBar from "@/components/shared/SearchBar"
 import { fetchUser, fetchUsers } from "@/lib/actions/user.actions"
 import { currentUser } from "@clerk/nextjs"
 import { redirect } from "next/navigation"
 
 
-export default async function Page() {
+export default async function Page({ searchParams }: { searchParams: { [key: string]: string } }) {
 
     const user = await currentUser()
 
@@ -16,7 +17,7 @@ export default async function Page() {
 
     const result = await fetchUsers({
       userId: user.id,
-      searchTerm: '',
+      searchTerm: searchParams.q,
       pageNumber: 1,
       pageSize: 25
     })
@@ -25,6 +26,7 @@ export default async function Page() {
   return (
     <section>
         <h1 className="head-text mb-10">Busca</h1>
+        <SearchBar searchWhere="search"/>
         <div className="mt-14 flex flex-col gap-9">
           {result?.users.length === 0 
           ? <p className="no-result">Nenhum usuário encontrado</p>
