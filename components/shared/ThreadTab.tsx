@@ -25,7 +25,6 @@ export default async function ThreadTab({currentUserId, accountId, accountType}:
   return (
 
     <section className='mt-9 flex flex-col gap-10'>
-        {console.log(result.threads.length)}
         {result.threads.map((thread: any) => (
           <ThreadCard 
           key={thread._id}
