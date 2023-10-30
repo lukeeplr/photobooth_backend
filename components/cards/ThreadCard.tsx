@@ -109,13 +109,14 @@ export default function ThreadCard({ id, currentUser, parentId, content, author,
               {formatDateString(createdAt.toString())}
               {" "}- Comunidade {community.name}
             </p>
+            <div className='relative h-4 w-4'>
             <Image 
               src={community.image}
               alt={community.name}
-              width={16}
-              height={16}
+              fill
               className='ml-1 rounded-full object-cover'
               />
+            </div>
           </Link>
         )}
 
