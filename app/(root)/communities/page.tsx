@@ -28,7 +28,7 @@ export default async function Page({searchParams}: {searchParams: { [key: string
     <section>
         <h1 className="head-text mb-10">Comunidades</h1>
         <SearchBar searchWhere="communities"/>
-        <div className="mt-14 flex gap-9 flex-wrap">
+        <div className="mt-14 flex gap-9 flex-wrap justify-start lg:gap-x-16">
           {result?.communities.length === 0 
           ? <p className="no-result">Nenhuma comunidade encontrada</p>
           : (
