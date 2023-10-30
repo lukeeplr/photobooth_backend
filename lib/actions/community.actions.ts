@@ -8,10 +8,10 @@ import User from "../models/user.model"
 import Thread from "../models/thread.model"
 
 type fetchCommunitiesPros = {
-    searchString: string,
-    pageNumber: number,
-    pageSize: number,
-    sortBy: SortOrder
+    searchString?: string,
+    pageNumber?: number,
+    pageSize?: number,
+    sortBy?: SortOrder
 }
 
 export async function addMemberToCommunity(userId: string, communityId: string) {
