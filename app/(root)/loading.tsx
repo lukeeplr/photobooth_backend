@@ -6,7 +6,7 @@ export default function Loading() {
   return (
     <>
     <h1 className="head-text">Carregando...</h1>
-    <section className="mt-9 flex flex-col gap-10">
+    <section className="mt-9 flex flex-col gap-10 w-[90%] sm:w-full sm:max-w-4xl">
       {Array.from({ length: 10 }).map((_, i) => (
        <article className={`flex flex-col w-full rounded-xl bg-dark-2 p-7`}>
        <div className='flex items-start justify-between'>
