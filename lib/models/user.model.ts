@@ -18,7 +18,14 @@ const userSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Community'
         }
+    ],
+    likedThreads: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Thread'
+        }
     ]
+
 })
 
 const User = mongoose.models.User || mongoose.model('User', userSchema)
