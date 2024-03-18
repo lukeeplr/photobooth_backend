@@ -18,12 +18,14 @@ import { Textarea } from '@/components/ui/textarea'
 
 import { ThreadValidation } from '@/lib/validations/thread'
 import { createThread } from '@/lib/actions/thread.actions'
+import { useToast } from '../ui/use-toast'
 
 export default function PostThread({ userId }: { userId: string }) {
 
   const pathname = usePathname()
   const router = useRouter()
   const { organization } = useOrganization()
+  const { toast } = useToast()
 
     const form = useForm({
         resolver: zodResolver(ThreadValidation),
@@ -42,6 +44,10 @@ export default function PostThread({ userId }: { userId: string }) {
         })
 
         router.push('/')     
+        
+        toast({
+          description: 'Publicação criada!'
+        })
     }
 
   return (

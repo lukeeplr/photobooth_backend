@@ -5,6 +5,7 @@ import User from "../models/user.model"
 import { connectToDB } from "../mongoose"
 import Thread from "../models/thread.model"
 import { FilterQuery, SortOrder } from "mongoose"
+import { redirect, useRouter } from "next/navigation"
 
 type updateUserParams = {
     userId: string,
@@ -22,6 +23,17 @@ type fetchUsersParams = {
     pageNumber?: number,
     pageSize?: number,
     sortBy?: SortOrder
+}
+
+
+type likeThreadParams = {
+    userId: string,
+    threadId: string
+}
+
+type wasLikedParams = {
+    userId: string,
+    threadId: string
 }
 
 
@@ -175,3 +187,61 @@ export async function fetchActivity(userId: string) {
         throw new Error(`Falha ao buscar notificações: ${error.message}`)
     }
 } 
+
+
+export async function likeThread({userId, threadId}: likeThreadParams) {
+
+    try {
+        connectToDB()
+        const user = await User.findOne({id: userId})
+        const thread = await Thread.findOne({_id: threadId})
+
+        if (!user || !thread) {
+            throw new Error('Usuário ou Thread inexistentes')            
+        }
+
+        let liked = thread.likedBy.includes(user._id)
+
+        console.log(thread)
+
+        if (liked) {
+            thread.likedBy.pull(user._id)
+            user.likedThreads.pull(thread._id)
+        } else {
+            thread.likedBy.push(user._id)
+            user.likedThreads.push(thread._id)
+        }
+
+        await thread.save()
+        await user.save()
+        revalidatePath(`/thread/${threadId}`)
+        revalidatePath(`/`)    
+
+    } catch (error: any) {
+        throw new Error(`Falha ao curtir a Thread: ${error.message}`)
+    }
+
+}
+
+
+export async function wasLiked({userId, threadId}: wasLikedParams) {
+
+    try {
+
+        connectToDB()
+
+        const user = await User.findOne({id: userId})
+        const thread = await Thread.findOne({_id: threadId}) 
+
+        if (!user || !thread) {
+            return false            
+        }
+
+        return (thread.likedBy.includes(user._id))
+
+
+    } catch(error: any) {
+        throw new Error(`Falha ao verificar se o usuário curtiu a Thread: ${error.message}`)
+    }
+
+}

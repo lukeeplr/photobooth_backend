@@ -13,7 +13,7 @@ export default async function Page({ searchParams }: { searchParams: { [key: str
 
     const userInfo = await fetchUser(user.id)
 
-    if (!userInfo.onboarded) redirect('/onboarding')
+    if (!userInfo?.onboarded) redirect('/onboarding')
 
     const result = await fetchUsers({
       userId: user.id,
@@ -29,7 +29,7 @@ export default async function Page({ searchParams }: { searchParams: { [key: str
         <SearchBar searchWhere="search"/>
         <div className="mt-14 flex flex-col gap-9">
           {result?.users.length === 0 
-          ? <p className="no-result">Nenhum usuário encontrado</p>
+          ? <p className="no-result text-left">Nenhum usuário encontrado</p>
           : (
             <>
               {result?.users.map((user) => (

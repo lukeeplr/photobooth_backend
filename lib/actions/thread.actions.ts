@@ -94,7 +94,6 @@ export async function fetchThreadById(id: string) {
     try {
         connectToDB() 
         const thread = await Thread.findById(id)
-        //TODO: populate community
         .populate({
             path: 'author',
             model: User,

@@ -20,13 +20,14 @@ export default function UserCard({id, name, username, imageUrl, cardType}: UserC
   return (
     <article className='user-card'>
         <div className="user-card_avatar items-center">
+            <div className='relative h-16 w-16'>
             <Image
             src={imageUrl}
             alt={`foto de perfil de @${username}`}
-            width={72}
-            height={72}
-            className='rounded-full'
+            fill
+            className='rounded-full object-cover'
             />
+            </div>
 
             <div className='flex-1 text-ellipsis whitespace-nowrap'>
                 <h4 className="text-base-semibold text-light-1">{name}</h4>

@@ -2,6 +2,8 @@ import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { formatDateString } from '@/lib/utils'
+import ThreadButtons from '../shared/ThreadButtons'
+import { wasLiked } from '@/lib/actions/user.actions'
 
 type ThreadCardProps = {
     id: string,
@@ -28,7 +30,10 @@ type ThreadCardProps = {
     isComment?: boolean
 }
 
-export default function ThreadCard({ id, currentUser, parentId, content, author, community, createdAt, comments, isComment }: ThreadCardProps) {
+export default async function ThreadCard({ id, currentUser, parentId, content, author, community, createdAt, comments, isComment }: ThreadCardProps) {
+
+  const hasLiked = await wasLiked({userId: currentUser, threadId: id})
+
   return (
     <article className={`flex flex-col w-full rounded-xl ${isComment ? 'px-0 xs:px-7 mt-2' : 'bg-dark-2 p-7'} `}>
         <div className='flex items-start justify-between'>
@@ -57,39 +62,7 @@ export default function ThreadCard({ id, currentUser, parentId, content, author,
             <p className='mt-2 text-small-regular text-light-2'>{content}</p>
 
             <div className={`${isComment && 'mb-10'} mt-5 flex flex-col gap-3`}>
-              <div className='flex gap-3.5'>
-                {/* TODO: like functionality */}
-                <Image
-                  src='/assets/heart-gray.svg'
-                  alt='botão de curtir'
-                  width={24}
-                  height={24}
-                  className='button-animation'
-                />
-                <Link href={`/thread/${id}`}>
-                  <Image
-                    src='/assets/reply.svg'
-                    alt='botão de responder'
-                    width={24}
-                    height={24}
-                    className='button-animation'
-                  />
-                </Link>
-                <Image
-                  src='/assets/repost.svg'
-                  alt='botão de repostar'
-                  width={24}
-                  height={24}
-                  className='button-animation'
-                />
-                <Image
-                  src='/assets/share.svg'
-                  alt='botão de compartilhar'
-                  width={24}
-                  height={24}
-                  className='button-animation'
-                  />
-                </div>
+              <ThreadButtons threadId={id.toString()} userId={currentUser.toString()} wasLiked={hasLiked}/>
 
                 {isComment && comments.length > 0 && (
                     <Link href={`/thread/${id}`}>

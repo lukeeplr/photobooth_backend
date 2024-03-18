@@ -7,12 +7,13 @@ import TopBar from '@/components/shared/TopBar';
 import LeftBar from '@/components/shared/LeftBar';
 import RightBar from '@/components/shared/RightBar';
 import BottomBar from '@/components/shared/BottomBar';
+import { Toaster } from '@/components/ui/toaster';
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Threads',
-  description: 'Threads feito com Next.js 13',
+  description: 'Uma aplicação web feita com Next.js 13',
 }
 
 export default function RootLayout({
@@ -35,6 +36,7 @@ export default function RootLayout({
           <RightBar />
         </main>
         <BottomBar />
+        <Toaster />
         </body>
     </html>
     </ClerkProvider>
